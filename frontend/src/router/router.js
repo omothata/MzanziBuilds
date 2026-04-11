@@ -1,12 +1,12 @@
 // router/router.js
-import { loadHome } from "../home/home.html";
-//import { loadLogin } from "../pages/auth/login.js";
+import { loadHome } from "../home/home.js";
+import { loadSignin } from "../auth/sign-in.js";
 //import { loadSignup } from "../pages/auth/signup.js";
 
 const routes = {
   "/": loadHome,
-  "/login": loadLogin,
-  "/signup": loadSignup,
+  "/sign-in": loadSignin,
+  //"/signup": loadSignup,
 };
 
 export function navigate(path) {
@@ -20,5 +20,5 @@ function router() {
   page();
 }
 
-window.addEventListener("popstate", router);
-window.addEventListener("load", router);
+window.addEventListener("popstate", router); // re-render the page when user goes back/forward
+window.addEventListener("load", router); //run router @ page load
