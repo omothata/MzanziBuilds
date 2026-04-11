@@ -1,14 +1,22 @@
 import { navigate } from "../router/router.js";
+import { loadHtmlIntoApp } from "../utils/load-html.js";
 
 export function loadHome() {
-    fetch("./home/home.html").then(response => response.text()).then(html=>{
-        document.getElementById("app").innerHTML = html;
+    loadHtmlIntoApp("../home/home.html", "Error loading home page")
+        .then((page) => {
+            if (!page) {
+                return;
+            }
 
-        // Home screen navigation
-        document.getElementById("sign-in")?.addEventListener("click", () => {navigate("/sign-in");});
+            // Home screen navigation
+            document.getElementById("sign-in")?.addEventListener("click", (e) => {
+                e.preventDefault();
+                navigate("/sign-in");
+            });
 
-       // document.getElementById("signup")?.addEventListener("click", () => {
-       //     navigate("/signup");
-       // });
-    })
+            document.getElementById("sign-up")?.addEventListener("click", (e) => {
+                e.preventDefault();
+                navigate("/sign-up");
+            });
+        });
 }

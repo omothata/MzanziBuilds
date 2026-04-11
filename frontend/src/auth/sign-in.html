@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>Mzanzi Builds</title>
     <!--link rel="icon" type="image/png" sizes="256x256" href=""-->
-    <script src="./sign-in.js"></script>
 </head>
 
 <body>
@@ -17,10 +16,10 @@
        
     <form action="" method="post" id="signInForm">
         <div>
-            <label for="username">
-                Username
+            <label for="identifier">
+                Username or email
             </label>
-            <input type="text" name="username" id="username" required/>
+            <input type="text" name="identifier" id="identifier" autocomplete="username" required/>
         </div>
         <div>
             <label for="password">
@@ -33,7 +32,7 @@
         </div>
     </form>
     <div class="footer">
-        <p>New to MzanziBuilds? <a href="/signup" data-link>Create an account</a></p>
+        <p>New to MzanziBuilds? <a href="/sign-up" data-link>Create an account</a></p>
     </div>
 </div>
 </body>

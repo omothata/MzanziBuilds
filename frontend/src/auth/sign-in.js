@@ -1,9 +1,23 @@
-import { navigate } from "../router/router.js";
+import { loadHtmlIntoApp } from "../utils/load-html.js";
 
 export function loadSignin() {
-    fetch("./home/home.html").then(response => response.text()).then(html=>{
-        document.getElementById("app").innerHTML = html;
+    loadHtmlIntoApp("../auth/sign-in.html", "Error loading signin page")
+        .then((page) => {
+            if (!page) {
+                return;
+            }
 
-    
-    })
+            const form = document.getElementById("signInForm");
+
+            // Form logic
+            if (form) {
+                form.addEventListener("submit", async(e) => {
+                    e.preventDefault();
+                    const identifier = form.identifier.value.trim();
+                    const password = form.password.value;
+
+
+                });
+            }
+        });
 }
