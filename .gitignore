@@ -1,0 +1,33 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment and local config
+.env
+.env.*
+!.env.example
+backend/src/main/resources/application-local.properties
+
+# Logs
+*.log
+
+# Java / Maven build output
+backend/target/
+backend/.mvn/
+
+# Frontend build output
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# Local tools and downloaded archives
+tools/
+*.tar.gz
+*.zip
+
+# Windows metadata files sometimes added to extracted archives
+*:Zone.Identifier
