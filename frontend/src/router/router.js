@@ -2,11 +2,21 @@
 import { loadHome } from "../home/home.js";
 import { loadSignin } from "../auth/sign-in.js";
 import { loadSignup } from "../auth/sign-up.js";
+import { loadMainFeed } from "../feed/main-feed.js";
+import { loadExploreFeed } from "../feed/explore-feed.js";
+import { loadProfileSetup } from "../onboarding/profile-setup.js";
+import { loadFollowedSkills } from "../onboarding/followed-skills.js";
+import { loadFollowSuggestions } from "../onboarding/follow-suggestions.js";
 
 const routes = {
   "/": loadHome,
   "/sign-in": loadSignin,
   "/sign-up": loadSignup,
+  "/onboarding/profile": loadProfileSetup,
+  "/onboarding/interests": loadFollowedSkills,
+  "/onboarding/follow": loadFollowSuggestions,
+  "/feed": loadMainFeed,
+  "/explore-feed": loadExploreFeed,
 };
 
 function normalizeRoute(path) {
@@ -22,6 +32,11 @@ function normalizeRoute(path) {
   const aliases = {
     "/signup": "/sign-up",
     "/signin": "/sign-in",
+    "/onboarding": "/onboarding/profile",
+    "/main-feed": "/feed",
+    "/mainfeed": "/feed",
+    "/explore": "/explore-feed",
+    "/explorefeed": "/explore-feed",
   };
 
   return aliases[trimmedPath] || trimmedPath;

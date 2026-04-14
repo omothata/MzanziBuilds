@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Set Up Profile | Mzanzi Builds</title>
+</head>
+
+<body>
+    <!-- Recommended animation: stagger the entrance of the heading and form fields, then fade/slide the continue button upward once the form is interactive. -->
+    <section class="container">
+        <header>
+            <p>Step 1 of 3</p>
+            <h1>Set up your profile</h1>
+            <p>Introduce yourself so other builders know who you are.</p>
+        </header>
+
+        <form id="profileSetupForm">
+            <div>
+                <label for="bio">Bio</label>
+                <textarea id="bio" name="bio" rows="4" placeholder="What are you building or learning?"></textarea>
+            </div>
+            <div>
+                <label for="location">Location (optional)</label>
+                <input type="text" id="location" name="location" placeholder="Johannesburg, South Africa">
+            </div>
+            <div>
+                <label for="profilePictureUrl">Profile picture URL</label>
+                <input type="url" id="profilePictureUrl" name="profilePictureUrl" placeholder="https://example.com/me.jpg">
+            </div>
+            <div>
+                <label for="websiteUrl">Website</label>
+                <input type="url" id="websiteUrl" name="websiteUrl" placeholder="https://your-site.dev">
+            </div>
+            <div>
+                <label for="githubUrl">GitHub</label>
+                <input type="url" id="githubUrl" name="githubUrl" placeholder="https://github.com/yourname">
+            </div>
+            <div>
+                <label for="linkedinUrl">LinkedIn</label>
+                <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://linkedin.com/in/yourname">
+            </div>
+            <div>
+                <label for="xUrl">X / Twitter</label>
+                <input type="url" id="xUrl" name="xUrl" placeholder="https://x.com/yourname">
+            </div>
+            <div>
+                <label for="skills">Your skills</label>
+                <input type="text" id="skills" name="skills" placeholder="JavaScript, Spring Boot, UI Design">
+            </div>
+            <div>
+                <button type="submit">Continue to interests</button>
+            </div>
+        </form>
+    </section>
+</body>
+
+</html>

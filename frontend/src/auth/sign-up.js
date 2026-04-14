@@ -1,6 +1,7 @@
 import { loadHtmlIntoApp } from "../utils/load-html.js";
 import { navigate } from "../router/router.js";
 import { signup } from "../services/authService.js";
+import { setCurrentUser } from "../utils/storage.js";
 
 export function loadSignup() {
     loadHtmlIntoApp("../auth/sign-up.html", "Error loading signup page")
@@ -21,10 +22,10 @@ export function loadSignup() {
                     const username = form.username.value.trim();
 
                     try {
-                        await signup({ name, username, email, password });
+                        const user = await signup({ name, username, email, password });
+                        setCurrentUser(user);
                         alert("Account created successfully");
-
-                        navigate("/sign-in");
+                        navigate("/onboarding/profile");
                     } catch(err) {
                         alert(err.message || "Sign-up failed");
                     }
