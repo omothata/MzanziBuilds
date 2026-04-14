@@ -1,9 +1,12 @@
 package com.mzanzibuilds.backend.auth;
 
+import com.mzanzibuilds.backend.auth.dto.SigninRequest;
+import com.mzanzibuilds.backend.auth.dto.SigninResponse;
 import com.mzanzibuilds.backend.auth.dto.SignupRequest;
 import com.mzanzibuilds.backend.auth.dto.SignupResponse;
 import com.mzanzibuilds.backend.user.User;
 import com.mzanzibuilds.backend.user.UserRepository;
+import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,8 +49,35 @@ public class AuthService {
     return new SignupResponse(
         "Account created successfully",
         savedUser.getId(),
+        savedUser.getName(),
         savedUser.getUsername(),
-        savedUser.getEmail()
+        savedUser.getEmail(),
+        savedUser.isOnboardingCompleted()
+    );
+  }
+
+  @Transactional(readOnly = true)
+  public SigninResponse signin(SigninRequest request) {
+    String identifier = request.getIdentifier().trim().toLowerCase();
+
+    Optional<User> user = identifier.contains("@")
+        ? userRepository.findByEmailIgnoreCase(identifier)
+        : userRepository.findByUsernameIgnoreCase(identifier);
+
+    User foundUser = user.orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username/email or password"));
+
+    if (!passwordEncoder.matches(request.getPassword(), foundUser.getPasswordHash())) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username/email or password");
+    }
+
+    return new SigninResponse(
+        "Sign-in successful",
+        foundUser.getId(),
+        foundUser.getName(),
+        foundUser.getUsername(),
+        foundUser.getEmail(),
+        foundUser.isOnboardingCompleted()
     );
   }
 }

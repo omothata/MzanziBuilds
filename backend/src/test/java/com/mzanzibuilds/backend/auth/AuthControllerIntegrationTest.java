@@ -46,9 +46,11 @@ class AuthControllerIntegrationTest {
             .content(payload))
         .andExpect(status().isCreated())
         .andExpect(jsonPath("$.message").value("Account created successfully"))
+        .andExpect(jsonPath("$.name").value("Ofentse"))
         .andExpect(jsonPath("$.username").value("ofentse"))
         .andExpect(jsonPath("$.email").value("ofentse@example.com"))
-        .andExpect(jsonPath("$.userId").isNumber());
+        .andExpect(jsonPath("$.userId").isNumber())
+        .andExpect(jsonPath("$.onboardingCompleted").value(false));
 
     User savedUser = userRepository.findByEmailIgnoreCase("ofentse@example.com").orElseThrow();
 
@@ -119,6 +121,92 @@ class AuthControllerIntegrationTest {
                 }
                 """))
         .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void signinAcceptsUsernameAndReturnsUser() throws Exception {
+    signup("""
+        {
+          "name": "Ofentse",
+          "email": "ofentse@example.com",
+          "username": "ofentse",
+          "password": "strongpassword123"
+        }
+        """);
+
+    mockMvc.perform(post("/api/auth/signin")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                  "identifier": "ofentse",
+                  "password": "strongpassword123"
+                }
+                """))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.message").value("Sign-in successful"))
+        .andExpect(jsonPath("$.username").value("ofentse"))
+        .andExpect(jsonPath("$.email").value("ofentse@example.com"))
+        .andExpect(jsonPath("$.name").value("Ofentse"))
+        .andExpect(jsonPath("$.userId").isNumber())
+        .andExpect(jsonPath("$.onboardingCompleted").value(false));
+  }
+
+  @Test
+  void signinAcceptsEmailAndReturnsUser() throws Exception {
+    signup("""
+        {
+          "name": "Ofentse",
+          "email": "ofentse@example.com",
+          "username": "ofentse",
+          "password": "strongpassword123"
+        }
+        """);
+
+    mockMvc.perform(post("/api/auth/signin")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                  "identifier": "ofentse@example.com",
+                  "password": "strongpassword123"
+                }
+                """))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.username").value("ofentse"));
+  }
+
+  @Test
+  void signinRejectsWrongPassword() throws Exception {
+    signup("""
+        {
+          "name": "Ofentse",
+          "email": "ofentse@example.com",
+          "username": "ofentse",
+          "password": "strongpassword123"
+        }
+        """);
+
+    mockMvc.perform(post("/api/auth/signin")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                  "identifier": "ofentse",
+                  "password": "wrongpassword"
+                }
+                """))
+        .andExpect(status().isUnauthorized());
+  }
+
+  @Test
+  void signinRejectsUnknownUser() throws Exception {
+    mockMvc.perform(post("/api/auth/signin")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                  "identifier": "missing-user",
+                  "password": "strongpassword123"
+                }
+                """))
+        .andExpect(status().isUnauthorized());
   }
 
   private void signup(String payload) throws Exception {

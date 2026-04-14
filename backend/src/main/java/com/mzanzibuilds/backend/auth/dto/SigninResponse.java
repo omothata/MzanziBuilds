@@ -1,6 +1,6 @@
 package com.mzanzibuilds.backend.auth.dto;
 
-public class SignupResponse {
+public class SigninResponse {
 
   private final String message;
   private final Long userId;
@@ -9,7 +9,7 @@ public class SignupResponse {
   private final String email;
   private final boolean onboardingCompleted;
 
-  public SignupResponse(
+  public SigninResponse(
       String message,
       Long userId,
       String name,

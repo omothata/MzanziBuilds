@@ -1,5 +1,7 @@
 package com.mzanzibuilds.backend.auth;
 
+import com.mzanzibuilds.backend.auth.dto.SigninRequest;
+import com.mzanzibuilds.backend.auth.dto.SigninResponse;
 import com.mzanzibuilds.backend.auth.dto.SignupRequest;
 import com.mzanzibuilds.backend.auth.dto.SignupResponse;
 import jakarta.validation.Valid;
@@ -24,5 +26,10 @@ public class AuthController {
   @ResponseStatus(HttpStatus.CREATED)
   public SignupResponse signup(@Valid @RequestBody SignupRequest request) {
     return authService.signup(request);
+  }
+
+  @PostMapping("/signin")
+  public SigninResponse signin(@Valid @RequestBody SigninRequest request) {
+    return authService.signin(request);
   }
 }
