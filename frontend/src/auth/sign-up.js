@@ -3,6 +3,10 @@ import { navigate } from "../router/router.js";
 import { signup } from "../services/authService.js";
 import { setCurrentUser } from "../utils/storage.js";
 
+function showSignupError(error) {
+    alert(error.message || "Sign-up failed");
+}
+
 export function loadSignup() {
     loadHtmlIntoApp("../auth/sign-up.html", "Error loading signup page")
         .then((page) => {
@@ -27,7 +31,7 @@ export function loadSignup() {
                         alert("Account created successfully");
                         navigate("/onboarding/profile");
                     } catch(err) {
-                        alert(err.message || "Sign-up failed");
+                        showSignupError(err);
                     }
 
                 });

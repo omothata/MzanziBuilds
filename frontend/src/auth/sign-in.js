@@ -3,6 +3,10 @@ import { navigate } from "../router/router.js";
 import { signin } from "../services/authService.js";
 import { setCurrentUser } from "../utils/storage.js";
 
+function showSigninError(error) {
+    alert(error.message || "Sign-in failed");
+}
+
 export function loadSignin() {
     loadHtmlIntoApp("../auth/sign-in.html", "Error loading signin page")
         .then((page) => {
@@ -24,7 +28,7 @@ export function loadSignin() {
                         setCurrentUser(user);
                         navigate(user.onboardingCompleted ? "/feed" : "/onboarding/profile");
                     } catch (error) {
-                        alert(error.message || "Sign-in failed");
+                        showSigninError(error);
                     }
 
                 });

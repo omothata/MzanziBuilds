@@ -7,6 +7,7 @@ import com.mzanzibuilds.backend.onboarding.dto.ProfileSetupRequest;
 import com.mzanzibuilds.backend.onboarding.dto.UserSummaryResponse;
 import com.mzanzibuilds.backend.user.User;
 import com.mzanzibuilds.backend.user.UserRepository;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -123,13 +124,13 @@ public class OnboardingService {
 
   private List<String> normalizeList(List<String> values) {
     if (values == null) {
-      return List.of();
+      return new ArrayList<>();
     }
 
     return values.stream()
         .map(this::normalizeText)
         .filter(value -> value != null)
         .distinct()
-        .toList();
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 }

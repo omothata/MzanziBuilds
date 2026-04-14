@@ -1,5 +1,21 @@
 const BASE_URL = "http://localhost:8080/api";
 
+function formatErrorMessage(path, status, errorBody) {
+    if (!errorBody) {
+        return `Request failed (${status}) for ${path}`;
+    }
+
+    const fieldErrors = errorBody.fieldErrors && typeof errorBody.fieldErrors === "object"
+        ? Object.entries(errorBody.fieldErrors)
+            .map(([field, message]) => `${field}: ${message}`)
+            .join("\n")
+        : "";
+
+    const baseMessage = errorBody.message || errorBody.error || `Request failed (${status})`;
+
+    return fieldErrors ? `${baseMessage}\n${fieldErrors}` : baseMessage;
+}
+
 export async function request(path, options = {}) {
     try{
         const headers = {
@@ -14,11 +30,11 @@ export async function request(path, options = {}) {
 
         // Handle non-OK responses
         if (!response.ok) {
-            let errorMessage = "Request failed";
+            let errorMessage = `Request failed (${response.status}) for ${path}`;
 
             try {
                 const errorBody = await response.json();
-                errorMessage = errorBody.message || errorBody.error || errorMessage;
+                errorMessage = formatErrorMessage(path, response.status, errorBody);
             } catch {
                 errorMessage = await response.text() || errorMessage;
             }
