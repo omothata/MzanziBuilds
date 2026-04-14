@@ -7,6 +7,8 @@ import { loadExploreFeed } from "../feed/explore-feed.js";
 import { loadProfileSetup } from "../onboarding/profile-setup.js";
 import { loadFollowedSkills } from "../onboarding/followed-skills.js";
 import { loadFollowSuggestions } from "../onboarding/follow-suggestions.js";
+import { loadCreateProject } from "../projects/create-project.js";
+import { loadProjectDetails } from "../projects/project-details.js";
 
 const routes = {
   "/": loadHome,
@@ -17,6 +19,8 @@ const routes = {
   "/onboarding/follow": loadFollowSuggestions,
   "/feed": loadMainFeed,
   "/explore-feed": loadExploreFeed,
+  "/projects/create": loadCreateProject,
+  "/projects/view": loadProjectDetails,
 };
 
 function normalizeRoute(path) {
@@ -24,7 +28,13 @@ function normalizeRoute(path) {
     return "/";
   }
 
-  const [pathname] = path.split(/[?#]/);
+  const queryIndex = path.indexOf("?");
+  const hashIndex = path.indexOf("#");
+  const pathnameEnd = [queryIndex, hashIndex]
+    .filter((index) => index >= 0)
+    .reduce((smallest, current) => Math.min(smallest, current), path.length);
+  const pathname = path.slice(0, pathnameEnd);
+  const suffix = path.slice(pathnameEnd);
   const trimmedPath = pathname.endsWith("/") && pathname.length > 1
     ? pathname.slice(0, -1)
     : pathname;
@@ -39,7 +49,7 @@ function normalizeRoute(path) {
     "/explorefeed": "/explore-feed",
   };
 
-  return aliases[trimmedPath] || trimmedPath;
+  return (aliases[trimmedPath] || trimmedPath) + suffix;
 }
 
 export function navigate(path) {
@@ -78,8 +88,9 @@ function handleLinkClick(event) {
 }
 
 function router() {
-  const path = normalizeRoute(window.location.pathname);
-  const page = routes[path] || loadHome;
+  const path = normalizeRoute(`${window.location.pathname}${window.location.search}${window.location.hash}`);
+  const [routePath] = path.split(/[?#]/);
+  const page = routes[routePath] || loadHome;
   page();
 }
 

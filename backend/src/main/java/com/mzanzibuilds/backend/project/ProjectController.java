@@ -69,4 +69,9 @@ public class ProjectController {
   ) {
     return projectService.toggleLike(projectId, request);
   }
+
+  @GetMapping("/celebration-wall")
+public List<CelebrationUserResponse> getCelebrationWall() {
+    return projectService.getCelebrationWall();
+}
 }

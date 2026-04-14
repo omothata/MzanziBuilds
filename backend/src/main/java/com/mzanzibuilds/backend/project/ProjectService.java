@@ -271,4 +271,8 @@ public class ProjectService {
 
     return null;
   }
+
+  public List<CelebrationUserResponse> getCelebrationWall() {
+    return projectRepository.getCelebrationWall();
+}
 }

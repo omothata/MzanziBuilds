@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Create Project | Mzanzi Builds</title>
+</head>
+
+<body>
+    <section class="container">
+        <header>
+            <h1>Create a project entry</h1>
+            <p>Share what you are building so others can follow, support, and discuss it.</p>
+        </header>
+
+        <form id="createProjectForm">
+            <div>
+                <label for="name">Project name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="5" required></textarea>
+            </div>
+            <div>
+                <label for="stage">Stage</label>
+                <input type="text" id="stage" name="stage" placeholder="Idea, MVP, Beta, Live" required>
+            </div>
+            <div>
+                <label for="githubUrl">GitHub link</label>
+                <input type="url" id="githubUrl" name="githubUrl" placeholder="https://github.com/owner/repo">
+            </div>
+            <div>
+                <label for="liveUrl">Live link</label>
+                <input type="url" id="liveUrl" name="liveUrl" placeholder="https://your-app.com">
+            </div>
+            <div>
+                <label for="supportRequired">Support required</label>
+                <textarea id="supportRequired" name="supportRequired" rows="3" placeholder="Design feedback, backend review, testing help"></textarea>
+            </div>
+            <div>
+                <label for="imageUrl">Project image URL</label>
+                <input type="url" id="imageUrl" name="imageUrl" placeholder="https://example.com/project-cover.jpg">
+            </div>
+            <div>
+                <label for="stack">Stack</label>
+                <input type="text" id="stack" name="stack" placeholder="Spring Boot, PostgreSQL, JavaScript">
+            </div>
+            <div>
+                <button type="submit">Publish project</button>
+            </div>
+        </form>
+    </section>
+</body>
+
+</html>
